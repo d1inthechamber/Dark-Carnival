@@ -8,7 +8,7 @@ var cash := 60
 var food := 3
 var tickets := 0
 var history: Array[Dictionary] = []
-var hidden := {"mercy": 0, "greed": 0, "violence": 0, "honesty": 0, "sacrifice": 0, "cruelty": 0}
+var morality := {"mercy": 0, "greed": 0, "violence": 0, "honesty": 0, "sacrifice": 0, "cruelty": 0}
 
 @onready var title: Label = $Margin/VBox/Title
 @onready var story: RichTextLabel = $Margin/VBox/Story
@@ -60,11 +60,11 @@ func thief_event() -> void:
 	clear_choices(); add_choice("CHASE HIM", chase_thief); add_choice("LET HIM GO", let_thief_go); add_choice("CALL FOR HELP", call_for_help); update_hud()
 
 func chase_thief() -> void:
-	health = max(0, health - 8); cash += 20; hidden["violence"] += 1; record("pickpocket", "chased", {"health_cost": 8})
+	health = max(0, health - 8); cash += 20; morality["violence"] += 1; record("pickpocket", "chased", {"health_cost": 8})
 	story.text = "You catch him between two tents. After a struggle, you recover the money, but leave bleeding from the elbow.\n\n[b]Cash recovered. Health -8.[/b]"; finish_slice()
 
 func let_thief_go() -> void:
-	hidden["mercy"] += 1; record("pickpocket", "let_go", {"money_lost": 20})
+	morality["mercy"] += 1; record("pickpocket", "let_go", {"money_lost": 20})
 	story.text = "You watch him disappear. Somewhere beyond the lights, a calliope begins playing a tune you almost recognize."; finish_slice()
 
 func call_for_help() -> void:
@@ -72,19 +72,19 @@ func call_for_help() -> void:
 	clear_choices(); add_choice("STOP THE WORKER", stop_worker); add_choice("Take your money and leave", take_money); add_choice("Watch", watch_worker); add_choice("Help the worker", help_worker)
 
 func stop_worker() -> void:
-	cash += 20; health = max(0, health - 10); hidden["mercy"] += 2; hidden["sacrifice"] += 1; record("worker_beating", "intervened", {"health_cost": 10})
+	cash += 20; health = max(0, health - 10); morality["mercy"] += 2; morality["sacrifice"] += 1; record("worker_beating", "intervened", {"health_cost": 10})
 	story.text = "You step between them. The worker shoves you hard, but finally backs away. The kid stares at you before running into the darkness.\n\n[b]Cash recovered. Health -10.[/b]"; finish_slice()
 
 func take_money() -> void:
-	cash += 20; hidden["greed"] += 1; record("worker_beating", "took_money", {})
+	cash += 20; morality["greed"] += 1; record("worker_beating", "took_money", {})
 	story.text = "You take the crumpled bills from the pavement and walk away. The sounds behind you continue longer than you expected."; finish_slice()
 
 func watch_worker() -> void:
-	resolve = max(0, resolve - 10); hidden["cruelty"] += 1; record("worker_beating", "watched", {})
+	resolve = max(0, resolve - 10); morality["cruelty"] += 1; record("worker_beating", "watched", {})
 	story.text = "You do nothing. Eventually the worker stops.\n\nHe smiles at you as though the two of you now share a secret.\n\n[b]Resolve -10.[/b]"; finish_slice()
 
 func help_worker() -> void:
-	cash += 20; hidden["violence"] += 2; hidden["cruelty"] += 2; record("worker_beating", "joined", {})
+	cash += 20; morality["violence"] += 2; morality["cruelty"] += 2; record("worker_beating", "joined", {})
 	story.text = "For a few terrible seconds, you join in. When it's over, the worker hands back your money.\n\n\"Carnival remembers its friends.\""; finish_slice()
 
 func finish_slice() -> void:
@@ -97,7 +97,7 @@ func preview_map() -> void:
 
 func reset_game() -> void:
 	health = 100; resolve = 100; cash = 60; food = 3; tickets = 0; history.clear()
-	for key in hidden.keys(): hidden[key] = 0
+	for key in morality.keys(): morality[key] = 0
 	town = ""; player_name = ""; input.text = ""; show_town_prompt()
 
 func record(event_name: String, choice: String, context: Dictionary) -> void:
