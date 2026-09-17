@@ -26,47 +26,55 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 110.0
-offset_top = 55.0
-offset_right = -110.0
-offset_bottom = -55.0
+offset_left = 90.0
+offset_top = 30.0
+offset_right = -90.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.16, 0.12, 1)
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 34
 text = "THE DARK CARNIVAL"
 horizontal_alignment = 1
 
 [node name="HUD" type="Label" parent="Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.88, 0.78, 0.48, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 horizontal_alignment = 1
 
 [node name="Story" type="RichTextLabel" parent="Margin/VBox"]
-custom_minimum_size = Vector2(0, 300)
+custom_minimum_size = Vector2(0, 220)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/default_color = Color(0.9, 0.88, 0.82, 1)
-theme_override_font_sizes/normal_font_size = 22
-theme_override_font_sizes/bold_font_size = 22
+theme_override_font_sizes/normal_font_size = 21
+theme_override_font_sizes/bold_font_size = 21
 bbcode_enabled = true
 fit_content = false
 scroll_active = true
 
 [node name="Input" type="LineEdit" parent="Margin/VBox"]
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 19
 placeholder_text = "Enter your town"
 
 [node name="Choices" type="VBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
+
+[node name="ControllerHint" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.56, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "CONTROLLER: D-PAD / STICK NAVIGATE   •   A / CROSS SELECT   •   B / CIRCLE BACK   •   LB / RB CYCLE   •   Y / TRIANGLE CARDS"
+horizontal_alignment = 1
+autowrap_mode = 2
