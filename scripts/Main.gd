@@ -7,6 +7,8 @@ const CARD_ICONS := {
 	"BACK DOOR": preload("res://assets/cards/card_back_door.svg")
 }
 
+const CARD_CHOICE_SCRIPT = preload("res://scripts/ui/CardChoice.gd")
+
 const SCENE_ART := {
 	"opening": preload("res://assets/art/carnival_of_carnage/coc_opening.svg"),
 	"gate": preload("res://assets/art/carnival_of_carnage/coc_gate.svg"),
@@ -163,24 +165,24 @@ func card_description(card_name: String) -> String:
 func build_card_grid() -> void:
 	clear_choices()
 	var grid := GridContainer.new()
-	grid.columns = 2
+	grid.columns = 4
 	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	grid.add_theme_constant_override("h_separation", 10)
-	grid.add_theme_constant_override("v_separation", 10)
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 4)
 	choices.add_child(grid)
 
-	for card_name in deck:
+	for index in range(deck.size()):
+		var card_name := deck[index]
 		var card := Button.new()
-		card.text = card_title(card_name) + "\n" + card_description(card_name).to_upper()
-		card.custom_minimum_size = Vector2(0, 112)
+		card.set_script(CARD_CHOICE_SCRIPT)
+		card.custom_minimum_size = Vector2(0, 142)
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		card.focus_mode = Control.FOCUS_ALL
-		card.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		apply_card_style(card, card_name)
+		card.call("configure", card_name, card_description(card_name), card_accent(card_name), CARD_ICONS.get(card_name), index)
 		card.pressed.connect(play_card.bind(card_name))
 		grid.add_child(card)
 
-	add_choice("PUT THE CARDS AWAY", thief_resume)
+	add_choice("LOWER THE HAND", thief_resume)
 	call_deferred("focus_first_choice")
 
 func card_title(card_name: String) -> String:
