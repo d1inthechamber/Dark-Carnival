@@ -1,4 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=6 format=3]
+
+[ext_resource path="res://assets/shaders/comic_halftone.gdshader" type="Shader" id="1_shader"]
+[ext_resource path="res://assets/ui/carnival_silhouette.svg" type="Texture2D" id="2_silhouette"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_frame"]
 bg_color = Color(0.018, 0.015, 0.027, 0.98)
@@ -13,7 +16,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_art"]
-bg_color = Color(0.055, 0.025, 0.075, 1)
+bg_color = Color(0.02, 0.012, 0.035, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -23,6 +26,9 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_halftone"]
+shader = ExtResource("1_shader")
 
 [node name="ComicFrame" type="PanelContainer"]
 size_flags_vertical = 3
@@ -40,9 +46,34 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="ArtStage" type="PanelContainer" parent="Margin/Layout"]
-custom_minimum_size = Vector2(0, 190)
+custom_minimum_size = Vector2(0, 205)
 layout_mode = 2
+clip_contents = true
 theme_override_styles/panel = SubResource("StyleBox_art")
+
+[node name="Backdrop" type="ColorRect" parent="Margin/Layout/ArtStage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+material = SubResource("ShaderMaterial_halftone")
+color = Color(1, 1, 1, 1)
+mouse_filter = 2
+
+[node name="Silhouette" type="TextureRect" parent="Margin/Layout/ArtStage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_silhouette")
+expand_mode = 1
+stretch_mode = 6
+modulate = Color(1, 1, 1, 0.72)
+mouse_filter = 2
 
 [node name="ArtStack" type="VBoxContainer" parent="Margin/Layout/ArtStage"]
 layout_mode = 2
@@ -51,8 +82,11 @@ theme_override_constants/separation = 4
 [node name="Eyebrow" type="Label" parent="Margin/Layout/ArtStage/ArtStack"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.98, 0.19, 0.55, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 13
-text = "ILLUSTRATED ENCOUNTER PANEL"
+text = "THE CARNIVAL REMEMBERS"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="Margin/Layout/ArtStage/ArtStack"]
@@ -63,9 +97,13 @@ mouse_filter = 2
 [node name="SceneLabel" type="Label" parent="Margin/Layout/ArtStage/ArtStack"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.73, 1, 0.2, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 25
 text = "THE DARK CARNIVAL"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Story" type="RichTextLabel" parent="Margin/Layout"]
