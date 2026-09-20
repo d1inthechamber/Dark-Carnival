@@ -1,0 +1,83 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_frame"]
+bg_color = Color(0.018, 0.015, 0.027, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.92, 0.08, 0.34, 0.88)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_art"]
+bg_color = Color(0.055, 0.025, 0.075, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.92, 0.96, 0.72)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="ComicFrame" type="PanelContainer"]
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBox_frame")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ArtStage" type="PanelContainer" parent="Margin/Layout"]
+custom_minimum_size = Vector2(0, 190)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_art")
+
+[node name="ArtStack" type="VBoxContainer" parent="Margin/Layout/ArtStage"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Eyebrow" type="Label" parent="Margin/Layout/ArtStage/ArtStack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.19, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "ILLUSTRATED ENCOUNTER PANEL"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Margin/Layout/ArtStage/ArtStack"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="SceneLabel" type="Label" parent="Margin/Layout/ArtStage/ArtStack"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.73, 1, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "THE DARK CARNIVAL"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Story" type="RichTextLabel" parent="Margin/Layout"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.93, 0.91, 0.86, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 21
+bbcode_enabled = true
+fit_content = false
+scroll_active = true
