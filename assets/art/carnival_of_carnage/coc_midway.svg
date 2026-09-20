@@ -1,16 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360">
-  <rect width="1280" height="360" fill="none"/>
-  <g fill="#09070d" stroke="#f2186e" stroke-width="5">
-    <path d="M50 340 V150 H450 V340 Z"/>
-    <path d="M50 150 L250 74 L450 150"/>
-  </g>
-  <g fill="#f4f0e5" stroke="#09070d" stroke-width="4">
-    <path d="M150 266 h46 v56 h-46 z M225 250 h46 v72 h-46 z M300 266 h46 v56 h-46 z"/>
-  </g>
-  <g fill="none" stroke="#2cf0eb" stroke-width="5" opacity="0.9">
-    <circle cx="885" cy="195" r="118"/>
-    <path d="M885 77 V313 M767 195 H1003 M802 112 L968 278 M968 112 L802 278"/>
-  </g>
-  <path d="M550 340 L640 210 L730 340 Z" fill="#09070d" stroke="#bfff2b" stroke-width="5"/>
-  <path d="M0 342 H1280" stroke="#f4f0e5" stroke-width="8"/>
+<defs><pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.5" fill="#f3e5c8" opacity=".07"/></pattern></defs>
+<rect width="1280" height="360" fill="#08070b"/><rect width="1280" height="360" fill="url(#dots)"/>
+<path d="M0 340V146L234 67L464 146V340Z" fill="#10090e" stroke="#f2186e" stroke-width="8"/>
+<path d="M0 149H464 M68 125L121 340 M151 95L194 340 M240 70L270 340 M329 99L347 340 M413 128L426 340" stroke="#eadfca" stroke-width="4" opacity=".5"/>
+<g fill="#eadfca" stroke="#0b090d" stroke-width="5">
+<path d="M98 262h55v67H98z M184 244h58v85h-58z M277 261h56v68h-56z"/>
+</g>
+<path d="M103 259L125 234L147 259 M189 241L212 216L236 241 M282 258L305 232L329 258" fill="#f2186e" stroke="#0b090d" stroke-width="4"/>
+<g fill="none" stroke="#2cebe8" stroke-width="6">
+<circle cx="905" cy="188" r="122"/><path d="M905 66V310 M783 188H1027 M819 102L991 274 M991 102L819 274"/>
+</g>
+<circle cx="905" cy="188" r="17" fill="#bfff2b"/>
+<path d="M528 340 L638 199 L746 340 Z" fill="#0a080d" stroke="#bfff2b" stroke-width="7"/>
+<path d="M603 243H672" stroke="#f2186e" stroke-width="7"/>
+<path d="M1051 340V172H1268V340Z" fill="#0d0910" stroke="#eadfca" stroke-width="6"/>
+<path d="M1051 174L1159 105L1268 174" fill="#141018" stroke="#f2186e" stroke-width="6"/>
+<g fill="#bfff2b">
+<circle cx="1090" cy="208" r="5"/><circle cx="1120" cy="208" r="5"/><circle cx="1150" cy="208" r="5"/><circle cx="1180" cy="208" r="5"/><circle cx="1210" cy="208" r="5"/>
+</g>
+<g fill="#0b090d" stroke="#f3e5c8" stroke-width="3" opacity=".75">
+<circle cx="501" cy="326" r="20"/><circle cx="553" cy="319" r="23"/><circle cx="760" cy="322" r="21"/><circle cx="815" cy="324" r="24"/>
+</g>
+<path d="M0 344H1280" stroke="#eadfca" stroke-width="9"/>
+<g stroke="#f2186e" stroke-width="4" opacity=".35"><path d="M20 47L249 18"/><path d="M1018 42L1260 18"/><path d="M427 78L579 47"/></g>
 </svg>
