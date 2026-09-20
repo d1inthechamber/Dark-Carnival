@@ -7,6 +7,14 @@ const CARD_ICONS := {
 	"BACK DOOR": preload("res://assets/cards/card_back_door.svg")
 }
 
+const SCENE_ART := {
+	"opening": preload("res://assets/art/carnival_of_carnage/coc_opening.svg"),
+	"gate": preload("res://assets/art/carnival_of_carnage/coc_gate.svg"),
+	"midway": preload("res://assets/art/carnival_of_carnage/coc_midway.svg"),
+	"mirrors": preload("res://assets/art/carnival_of_carnage/coc_mirrors.svg"),
+	"finale": preload("res://assets/art/carnival_of_carnage/coc_finale.svg")
+}
+
 var town := ""
 var player_name := ""
 var health := 100
@@ -35,6 +43,7 @@ var last_controller_device := 0
 @onready var transition_fx: Control = $TransitionFX
 @onready var comic_frame: PanelContainer = $Margin/VBox/ComicFrame
 @onready var art_backdrop: ColorRect = $Margin/VBox/ComicFrame/Margin/Layout/ArtStage/Backdrop
+@onready var art_silhouette: TextureRect = $Margin/VBox/ComicFrame/Margin/Layout/ArtStage/Silhouette
 
 func _ready() -> void:
 	show_town_prompt()
@@ -352,14 +361,29 @@ func set_scene(label_text:String) -> void:
 	scene_label.text = label_text
 	var palette := scene_palette(label_text)
 	scene_label.add_theme_color_override("font_color", palette["accent"])
+	art_silhouette.texture = scene_art_for(label_text)
 	var material := art_backdrop.material as ShaderMaterial
 	if material:
 		material.set_shader_parameter("neon_a", palette["accent"])
 		material.set_shader_parameter("neon_b", palette["secondary"])
 	scene_label.modulate.a = 0.45
+	art_silhouette.modulate.a = 0.2
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(scene_label, "modulate:a", 1.0, 0.16)
+	tween.parallel().tween_property(art_silhouette, "modulate:a", 0.76, 0.22)
+
+func scene_art_for(label_text:String) -> Texture2D:
+	var upper := label_text.to_upper()
+	if upper.contains("MIRROR") or upper.contains("REFLECTION") or upper.contains("SHATTER"):
+		return SCENE_ART["mirrors"]
+	if upper.contains("BOTTLE") or upper.contains("RABBIT") or upper.contains("THIRD THROW") or upper.contains("MIDWAY") or upper.contains("THIEF") or upper.contains("CHASE") or upper.contains("CARNIVAL ANSWERS") or upper.contains("TAKE THE MONEY") or upper.contains("YOU WATCH") or upper.contains("STEP BETWEEN"):
+		return SCENE_ART["midway"]
+	if upper.contains("ONE SOUL") or upper.contains("LIGHT DIES") or upper.contains("DAWN") or upper.contains("PULL") or upper.contains("EVERYBODY IS LOOKING"):
+		return SCENE_ART["finale"]
+	if upper.contains("GATE") or upper.contains("IRON") or upper.contains("ADMISSION"):
+		return SCENE_ART["gate"]
+	return SCENE_ART["opening"]
 
 func scene_palette(label_text:String) -> Dictionary:
 	var upper := label_text.to_upper()
