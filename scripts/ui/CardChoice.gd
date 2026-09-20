@@ -45,11 +45,11 @@ func _mouse_focus() -> void:
 	grab_focus()
 
 func _lift() -> void:
-	_tween_pose(Vector2(1.055, 1.055), 0.0, Vector2(0, -7))
+	_tween_pose(Vector2(1.055, 1.055), 0.0)
 	queue_redraw()
 
 func _settle() -> void:
-	_tween_pose(Vector2.ONE, rest_rotation, Vector2.ZERO)
+	_tween_pose(Vector2.ONE, rest_rotation)
 	queue_redraw()
 
 func _press_kick() -> void:
@@ -60,13 +60,12 @@ func _press_kick() -> void:
 	motion_tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	motion_tween.tween_property(self, "scale", Vector2(1.04, 1.04), 0.11)
 
-func _tween_pose(target_scale:Vector2, target_rotation:float, target_position:Vector2) -> void:
+func _tween_pose(target_scale:Vector2, target_rotation:float) -> void:
 	if motion_tween and motion_tween.is_running():
 		motion_tween.kill()
 	motion_tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	motion_tween.tween_property(self, "scale", target_scale, 0.13)
 	motion_tween.parallel().tween_property(self, "rotation_degrees", target_rotation, 0.13)
-	motion_tween.parallel().tween_property(self, "position:y", target_position.y, 0.13)
 
 func _draw() -> void:
 	var rect := Rect2(Vector2.ZERO, size)
