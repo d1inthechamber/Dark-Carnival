@@ -1,5 +1,12 @@
 extends Control
 
+const CARD_ICONS := {
+	"HATCHET": preload("res://assets/cards/card_hatchet.svg"),
+	"FAYGO BREAK": preload("res://assets/cards/card_faygo_break.svg"),
+	"CARNIVAL SIGHT": preload("res://assets/cards/card_carnival_sight.svg"),
+	"BACK DOOR": preload("res://assets/cards/card_back_door.svg")
+}
+
 var town := ""
 var player_name := ""
 var health := 100
@@ -27,6 +34,7 @@ var last_controller_device := 0
 @onready var card_hint: Label = $Margin/VBox/CardHand/Margin/Row/CardHint
 @onready var transition_fx: Control = $TransitionFX
 @onready var comic_frame: PanelContainer = $Margin/VBox/ComicFrame
+@onready var art_backdrop: ColorRect = $Margin/VBox/ComicFrame/Margin/Layout/ArtStage/Backdrop
 
 func _ready() -> void:
 	show_town_prompt()
@@ -144,7 +152,7 @@ func build_card_grid() -> void:
 	for card_name in deck:
 		var card := Button.new()
 		card.text = card_title(card_name) + "\n" + card_description(card_name).to_upper()
-		card.custom_minimum_size = Vector2(0, 92)
+		card.custom_minimum_size = Vector2(0, 112)
 		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		card.focus_mode = Control.FOCUS_ALL
 		card.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -173,6 +181,7 @@ func card_accent(card_name: String) -> Color:
 
 func apply_card_style(button:Button, card_name:String) -> void:
 	var accent := card_accent(card_name)
+	button.icon = CARD_ICONS.get(card_name)
 	button.add_theme_font_size_override("font_size", 16)
 	button.add_theme_color_override("font_color", Color(0.94,0.92,0.86,1))
 	button.add_theme_color_override("font_focus_color", Color(0.03,0.02,0.04,1))
@@ -341,10 +350,32 @@ func update_hud(show_stats:=true) -> void:
 
 func set_scene(label_text:String) -> void:
 	scene_label.text = label_text
+	var palette := scene_palette(label_text)
+	scene_label.add_theme_color_override("font_color", palette["accent"])
+	var material := art_backdrop.material as ShaderMaterial
+	if material:
+		material.set_shader_parameter("neon_a", palette["accent"])
+		material.set_shader_parameter("neon_b", palette["secondary"])
 	scene_label.modulate.a = 0.45
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(scene_label, "modulate:a", 1.0, 0.16)
+
+func scene_palette(label_text:String) -> Dictionary:
+	var upper := label_text.to_upper()
+	if upper.contains("MIRROR") or upper.contains("REFLECTION") or upper.contains("SHATTER"):
+		return {"accent":Color(0.12,0.92,0.98,1), "secondary":Color(0.92,0.12,0.7,1)}
+	if upper.contains("FAYGO"):
+		return {"accent":Color(0.1,0.9,0.95,1), "secondary":Color(0.72,1,0.18,1)}
+	if upper.contains("HATCHET") or upper.contains("CHASE") or upper.contains("IRON"):
+		return {"accent":Color(0.96,0.08,0.22,1), "secondary":Color(0.98,0.72,0.08,1)}
+	if upper.contains("BOTTLE") or upper.contains("RABBIT") or upper.contains("THIRD THROW"):
+		return {"accent":Color(0.93,0.78,0.08,1), "secondary":Color(0.72,1,0.18,1)}
+	if upper.contains("DAWN") or upper.contains("GONE"):
+		return {"accent":Color(0.94,0.84,0.56,1), "secondary":Color(0.72,0.12,0.9,1)}
+	if upper.contains("ONE SOUL") or upper.contains("LAST") or upper.contains("LIGHT DIES"):
+		return {"accent":Color(0.88,0.04,0.24,1), "secondary":Color(0.45,0.02,0.05,1)}
+	return {"accent":Color(0.98,0.15,0.55,1), "secondary":Color(0.16,0.95,0.96,1)}
 
 func set_card_shell(visible_state:bool, hint:String="") -> void:
 	card_hand.visible = visible_state
