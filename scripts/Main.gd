@@ -46,7 +46,18 @@ var last_controller_device := 0
 @onready var art_silhouette: TextureRect = $Margin/VBox/ComicFrame/Margin/Layout/ArtStage/Silhouette
 
 func _ready() -> void:
-	show_town_prompt()
+	show_title_screen()
+
+func show_title_screen() -> void:
+	current_context = "title"
+	title.text = "THE DARK CARNIVAL"
+	input.visible = false
+	set_card_shell(false)
+	set_scene("FIRST JOKER'S CARD // CARNIVAL OF CARNAGE")
+	story.text = "[center][b]THE DARK CARNIVAL[/b]\n\nA choice-driven journey through a carnival that judges every decision you make.\n\nTonight, the first card turns over.\n\n[b]CARNIVAL OF CARNAGE[/b]\n\n[i]The Carnival remembers everything.[/i][/center]"
+	clear_choices()
+	add_choice("ENTER THE DARK CARNIVAL", show_town_prompt)
+	update_hud(false)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventJoypadButton:
@@ -349,7 +360,7 @@ func carnival_judgment() -> String:
 func reset_game() -> void:
 	health=100; resolve=100; cash=60; food=3; faygo=2; tickets=0; history.clear()
 	for key in morality.keys(): morality[key]=0
-	town=""; player_name=""; input.text=""; show_town_prompt()
+	town=""; player_name=""; input.text=""; show_title_screen()
 
 func record(event_name:String, choice:String) -> void:
 	history.append({"event":event_name,"choice":choice,"health":health,"resolve":resolve,"cash":cash,"faygo":faygo,"tickets":tickets})
@@ -471,6 +482,8 @@ func controller_back() -> void:
 		thief_resume()
 	elif current_context=="name_entry":
 		input.text=""; town=""; show_town_prompt()
+	elif current_context=="town_entry":
+		input.text=""; show_title_screen()
 
 func rumble(weak:float=.25,strong:float=.55,duration:float=.18) -> void:
 	if Input.get_connected_joypads().has(last_controller_device): Input.start_joy_vibration(last_controller_device,weak,strong,duration)
