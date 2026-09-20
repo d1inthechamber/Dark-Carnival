@@ -48,7 +48,7 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="ArtStage" type="PanelContainer" parent="Margin/Layout"]
-custom_minimum_size = Vector2(0, 205)
+custom_minimum_size = Vector2(0, 174)
 layout_mode = 2
 clip_contents = true
 theme_override_styles/panel = SubResource("StyleBox_art")
@@ -102,22 +102,22 @@ theme_override_colors/font_color = Color(0.73, 1, 0.2, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 23
 text = "THE DARK CARNIVAL"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Story" type="RichTextLabel" parent="Margin/Layout"]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 102)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/default_color = Color(0.93, 0.91, 0.86, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
-theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 21
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 19
 bbcode_enabled = true
 fit_content = false
 scroll_active = true
