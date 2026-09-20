@@ -1,16 +1,18 @@
 [gd_scene load_steps=2 format=3]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_choices"]
-bg_color = Color(0.025, 0.02, 0.038, 0.96)
-border_width_left = 2
+bg_color = Color(0.028, 0.019, 0.034, 0.985)
+border_width_left = 3
 border_width_top = 2
-border_width_right = 2
+border_width_right = 3
 border_width_bottom = 2
-border_color = Color(0.55, 0.16, 0.78, 0.9)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+border_color = Color(0.62, 0.19, 0.76, 0.86)
+corner_radius_top_left = 3
+corner_radius_top_right = 1
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 1
+shadow_color = Color(0, 0, 0, 0.82)
+shadow_size = 7
 
 [node name="ChoiceList" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 160)
@@ -18,9 +20,9 @@ theme_override_styles/panel = SubResource("StyleBox_choices")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 11
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
+theme_override_constants/margin_right = 11
 theme_override_constants/margin_bottom = 10
 
 [node name="ChoicesScroll" type="ScrollContainer" parent="Margin"]
