@@ -31,3 +31,17 @@ jobs:
           godot --headless --path . --export-debug "Windows Desktop" build/DarkCarnival.exe
           test -s build/DarkCarnival.exe
           test -s build/DarkCarnival.pck
+      - name: Package Windows demo
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p dist/DarkCarnival
+          cp build/DarkCarnival.exe build/DarkCarnival.pck dist/DarkCarnival/
+          printf 'Dark Carnival — Carnival of Carnage visual demo\n\nRun DarkCarnival.exe.\nController: D-pad/stick navigate, A/Cross select, B/Circle back, LB/RB cycle, Y/Triangle opens cards when available.\n' > dist/DarkCarnival/README.txt
+      - name: Upload Windows demo artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: DarkCarnival-Windows-Demo
+          path: dist/DarkCarnival/
+          if-no-files-found: error
+          retention-days: 14
