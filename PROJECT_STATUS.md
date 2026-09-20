@@ -4,44 +4,52 @@
 
 ## Current milestone
 
-**Build 0.4 — Visual demo foundation**
+**Build 0.5 — Carnival of Carnage art-fidelity approval slice**
 
-`[███████░░░] 70%`
+`[████████░░] 80%`
 
 ### Complete
 - Godot project boots from `scenes/Main.tscn`
+- Complete gate → pickpocket → midway → mirror maze → finale → judgment gameplay loop
 - Town and player-name setup, including controller virtual keyboard
 - Core HUD/resources: Health, Resolve, Cash, Food, Faygo, Tickets
 - Hidden morality and choice-history tracking
-- Branching locked-gate and pickpocket encounters
-- Four-card hand prototype with Faygo interaction
-- Midway bottle game with fair, dishonest, generous, and skip routes
-- Mirror-maze encounter whose outcome reacts to prior morality
-- Multiple exit routes and end-of-level Carnival judgment
 - Controller navigation foundation, shoulder cycling, back behavior, card shortcut, rumble
-- Godot validation workflow passes on the current main branch
-- Main scene refactored into reusable comic UI components
-- Comic encounter frame, HUD bar, choice panel, card-hand shell, and transition FX scene added
-- Neon controller-focus styling and impact flashes integrated into the playable loop
-- Visual bible and first-demo art asset checklist committed
+- Reusable comic UI components and impact/transition FX
+- Authoritative user-supplied Hatchet Man asset integrated in the game header
+- First four card art briefs locked
+- HATCHET, FAYGO BREAK, CARNIVAL SIGHT, and BACK DOOR redrawn into the approved distressed horror-comic direction
+- Card backs redesigned around the carnival-wheel motif without substituting the Hatchet Man
+- Card hand now behaves like a physical deck with lift, tilt, focus, and impact motion
+- Opening, gate, midway, mirror-maze, and finale panels repainted with denser distressed comic composition
+- Selective neon chapter palette and animated halftone treatment
+- Windows debug export and GitHub artifact packaging workflow
 
-### In progress / validation needed
-- Replace encounter-panel placeholders with final illustrated Carnival of Carnage art
-- Add authoritative recurring mascot/brand assets where appropriate
-- Build illustrated versions of the first four playable cards
-- Add layered animation/parallax, card motion, Faygo spray, mirror distortion, and page/ink transitions
-- Regression-test every encounter branch with the new visual shell
-- Improve remaining controller edge cases and focus transitions
-- Package a clearly downloadable first-demo build
+### Current approval-build work
+- Increase illustration fidelity beyond vector/composition scaffolding so major panels feel like finished comic art
+- Add encounter-specific foreground/background layers and stronger page composition
+- Add final-style title treatment and global UI distress pass
+- Add Faygo spray, mirror distortion, page/ink transitions, and additional environmental motion
+- Regression-test every encounter branch after the current art changes
+- Verify controller focus across the upgraded card presentation
+- Rebuild the Windows approval artifact after the art-fidelity pass is stable
 
-### First user-facing demo gate
-The demo is considered ready only when the complete gate → pickpocket → midway → mirror maze → finale → judgment loop works without a blocking error **and** the visual presentation is representative of the intended finished game: gritty supernatural horror-comic panels, selective neon carnival color, illustrated cards, readable controller-first UI, and noticeable motion/impact polish.
+### Do not call the next build approved until
+The next user-facing build must feel representative of the finished game rather than a prototype. It needs:
+- gritty 1990s supernatural horror-comic presentation
+- authored, asymmetric encounter art with heavy ink/cross-hatching
+- selective neon rather than generic all-over glow
+- the authoritative Hatchet Man where the mascot is used
+- a cohesive illustrated four-card hand
+- readable, fast controller-first interaction
+- meaningful impact animation and transitions
+- the full first-level loop passing without blocking errors
 
 ## Larger roadmap
 
 `[██░░░░░░░░] Early production`
 
-1. Carnival of Carnage visual demo
+1. Carnival of Carnage approval slice
 2. Ringmaster
 3. Riddle Box
 4. The Great Milenko
