@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource path="res://assets/shaders/comic_halftone.gdshader" type="Shader" id="1_shader"]
 [ext_resource path="res://assets/ui/carnival_silhouette.svg" type="Texture2D" id="2_silhouette"]
+[ext_resource path="res://scripts/ui/ComicFrameFX.gd" type="Script" id="3_fx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_frame"]
 bg_color = Color(0.018, 0.015, 0.027, 0.98)
@@ -33,6 +34,7 @@ shader = ExtResource("1_shader")
 [node name="ComicFrame" type="PanelContainer"]
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBox_frame")
+script = ExtResource("3_fx")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 2
