@@ -10,9 +10,10 @@ uniform float glow_strength = 0.18;
 void fragment() {
 	vec2 uv = UV;
 	float vignette = smoothstep(0.88, 0.28, distance(uv, vec2(0.5)));
-	float slash = pow(max(0.0, 1.0 - abs(uv.x - (0.18 + uv.y * 0.42)) * 2.7), 7.0);
-	float dots = smoothstep(0.62, 0.98, sin(uv.x * dot_scale) * sin(uv.y * dot_scale));
-	float scan = 0.5 + 0.5 * sin((uv.y * 140.0) + (uv.x * 11.0));
+	float drift = sin(TIME * 0.32) * 0.018;
+	float slash = pow(max(0.0, 1.0 - abs(uv.x - (0.18 + uv.y * 0.42 + drift)) * 2.7), 7.0);
+	float dots = smoothstep(0.62, 0.98, sin((uv.x + TIME * 0.0015) * dot_scale) * sin(uv.y * dot_scale));
+	float scan = 0.5 + 0.5 * sin((uv.y * 140.0) + (uv.x * 11.0) + (TIME * 0.65));
 
 	vec3 color = ink_color.rgb;
 	color += neon_a.rgb * slash * glow_strength;
