@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360">
+  <rect width="1280" height="360" fill="none"/>
+  <g fill="#09070d" stroke="#f2186e" stroke-width="5" stroke-linejoin="round">
+    <path d="M0 330 L0 274 L108 246 L190 330 Z"/>
+    <path d="M120 330 L212 206 L304 330 Z"/>
+    <path d="M176 218 L212 154 L248 218 Z"/>
+    <path d="M322 330 L390 238 L458 330 Z"/>
+    <path d="M356 248 L390 188 L424 248 Z"/>
+    <path d="M838 330 L928 220 L1018 330 Z"/>
+    <path d="M894 232 L928 168 L962 232 Z"/>
+    <path d="M1040 330 L1126 244 L1212 330 Z"/>
+  </g>
+  <g fill="none" stroke="#28f1ea" stroke-width="5" opacity="0.8">
+    <circle cx="654" cy="204" r="112"/>
+    <circle cx="654" cy="204" r="18"/>
+    <path d="M654 92 V316 M542 204 H766 M575 125 L733 283 M733 125 L575 283"/>
+    <path d="M616 316 L654 204 L692 316"/>
+  </g>
+  <g fill="#c8ff2e" stroke="#09070d" stroke-width="3">
+    <path d="M212 154 l22 -28 l12 36 z"/>
+    <path d="M390 188 l23 -26 l10 35 z"/>
+    <path d="M928 168 l24 -28 l10 36 z"/>
+  </g>
+  <g stroke="#09070d" stroke-width="12">
+    <path d="M18 338 H1260"/>
+    <path d="M490 330 V220 M818 330 V220"/>
+  </g>
+</svg>
