@@ -236,17 +236,17 @@ func play_card(card_name: String) -> void:
 	match card_name:
 		"HATCHET":
 			cash += 20; morality["violence"] += 1; set_card_shell(false); set_scene("HATCHET // IMPACT")
-			story.text = "The HATCHET card snaps forward like a thrown blade. The thief drops the money and runs.\n\n[b]Cash recovered. Violence remembered.[/b]"; rumble(.45,.9,.28); impact_flash("HATCHET", Color(0.96,0.08,0.22,1)); midway_crossroads()
+			story.text = "The HATCHET card snaps forward like a thrown blade. The thief drops the money and runs.\n\n[b]Cash recovered. Violence remembered.[/b]"; rumble(.45,.9,.28); card_impact("HATCHET", "HATCHET", Color(0.96,0.08,0.22,1)); midway_crossroads()
 		"FAYGO BREAK":
 			if faygo <= 0: story.text = "You reach for a bottle. Empty."; clear_choices(); add_choice("BACK",open_card_hand); return
 			faygo -= 1; resolve = min(100,resolve+20); current_context = "thief_resume"; set_card_shell(false); set_scene("FAYGO BREAK")
-			story.text = "You crack a cold Faygo. The midway noise briefly becomes music.\n\n[b]Faygo -1. Resolve +20.[/b]"; thief_choices(); update_hud(); impact_flash("FSSSHHH!", Color(0.1,0.9,0.95,1))
+			story.text = "You crack a cold Faygo. The midway noise briefly becomes music.\n\n[b]Faygo -1. Resolve +20.[/b]"; thief_choices(); update_hud(); card_impact("FAYGO BREAK", "FSSSHHH!", Color(0.1,0.9,0.95,1))
 		"CARNIVAL SIGHT":
 			resolve = max(0,resolve-3); current_context = "thief_resume"; set_card_shell(false); set_scene("CARNIVAL SIGHT")
-			story.text = "The card's eye opens. You see CALL FOR HELP before choosing it: a worker catches the kid... and keeps hitting him after the money is recovered.\n\n[b]Resolve -3.[/b]"; thief_choices(); update_hud(); impact_flash("YOU SAW IT", Color(0.68,0.95,0.18,1))
+			story.text = "The card's eye opens. You see CALL FOR HELP before choosing it: a worker catches the kid... and keeps hitting him after the money is recovered.\n\n[b]Resolve -3.[/b]"; thief_choices(); update_hud(); card_impact("CARNIVAL SIGHT", "YOU SAW IT", Color(0.68,0.95,0.18,1))
 		"BACK DOOR":
 			resolve = max(0,resolve-8); morality["honesty"] -= 1; set_card_shell(false); set_scene("THE PAINTED DOOR")
-			story.text = "A painted door appears. You step through and emerge two tents away. The thief—and your money—are gone.\n\n[b]Resolve -8.[/b]"; impact_flash("GONE", Color(0.72,0.12,0.9,1)); midway_crossroads()
+			story.text = "A painted door appears. You step through and emerge two tents away. The thief—and your money—are gone.\n\n[b]Resolve -8.[/b]"; card_impact("BACK DOOR", "GONE", Color(0.72,0.12,0.9,1)); midway_crossroads()
 
 func thief_resume() -> void:
 	current_context = "thief_resume"; set_card_shell(false); set_scene("THE THIEF IS GETTING AWAY"); story.text = "The thief is still somewhere in the crowd. Your $20 is still gone."; thief_choices()
@@ -420,6 +420,13 @@ func set_card_shell(visible_state:bool, hint:String="") -> void:
 
 func impact_flash(caption:String, tint:Color) -> void:
 	if transition_fx.has_method("impact"): transition_fx.call("impact", caption, tint)
+	panel_punch()
+
+func card_impact(card_name:String, caption:String, tint:Color) -> void:
+	if transition_fx.has_method("card_play"):
+		transition_fx.call("card_play", card_name, caption, tint)
+	else:
+		impact_flash(caption, tint)
 	panel_punch()
 
 func panel_punch() -> void:
