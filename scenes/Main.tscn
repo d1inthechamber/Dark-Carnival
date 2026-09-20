@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id="1"]
 [ext_resource path="res://scenes/ui/HUDBar.tscn" type="PackedScene" id="2"]
@@ -6,6 +6,22 @@
 [ext_resource path="res://scenes/ui/ChoiceList.tscn" type="PackedScene" id="4"]
 [ext_resource path="res://scenes/ui/CardHand.tscn" type="PackedScene" id="5"]
 [ext_resource path="res://scenes/ui/TransitionFX.tscn" type="PackedScene" id="6"]
+[ext_resource path="res://assets/brand/hatchet_man_authoritative.png" type="Texture2D" id="7_brand"]
+
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_brand"]
+bg_color = Color(0.78, 0.72, 0.61, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.08, 0.3, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_input"]
 bg_color = Color(0.025, 0.02, 0.04, 0.98)
@@ -78,6 +94,19 @@ theme_override_constants/separation = 9
 [node name="Header" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 12
+
+[node name="BrandBadge" type="PanelContainer" parent="Margin/VBox/Header"]
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_brand")
+
+[node name="Mark" type="TextureRect" parent="Margin/VBox/Header/BrandBadge"]
+layout_mode = 2
+texture = ExtResource("7_brand")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 1, 1, 0.98)
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="Margin/VBox/Header"]
 layout_mode = 2
