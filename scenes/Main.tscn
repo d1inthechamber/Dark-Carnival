@@ -92,8 +92,8 @@ text = "THE DARK CARNIVAL"
 [node name="BuildTag" type="Label" parent="Margin/VBox/Header"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 1, 0.18, 1)
-theme_override_font_sizes/font_size = 14
-text = "CARNIVAL OF CARNAGE // VISUAL PROTOTYPE"
+theme_override_font_sizes/font_size = 13
+text = "JOKER CARD I // CARNIVAL OF CARNAGE"
 vertical_alignment = 1
 
 [node name="HUDBar" parent="Margin/VBox" instance=ExtResource("2")]
