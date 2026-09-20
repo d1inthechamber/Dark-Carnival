@@ -1,7 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
-  <rect x="2" y="2" width="92" height="92" rx="10" fill="#08070b" stroke="#9d27e8" stroke-width="4"/>
-  <path d="M29 18 H69 V82 H29 Z" fill="#281035" stroke="#18e5e7" stroke-width="4"/>
-  <path d="M37 26 H61 V74 H37 Z" fill="#08070b" stroke="#f2186e" stroke-width="3"/>
-  <circle cx="56" cy="50" r="3" fill="#bfff2b"/>
-  <path d="M36 74 L23 86 M62 74 L77 86" stroke="#9d27e8" stroke-width="4" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<defs>
+  <pattern id="scrape" width="20" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(-17)">
+    <path d="M2 0V20 M9 0V20" stroke="#b23af0" stroke-opacity=".1" stroke-width="3"/>
+  </pattern>
+</defs>
+<rect width="512" height="512" fill="#07060a"/>
+<path d="M17 24 L490 14 L499 485 L25 497 Z" fill="#12091a" stroke="#9c2be0" stroke-width="14"/>
+<path d="M37 44 L469 34 L478 465 L45 476 Z" fill="url(#scrape)" stroke="#eee2ca" stroke-opacity=".42" stroke-width="5"/>
+<path d="M128 86 L379 76 L394 422 L142 438 Z" fill="#1b1024" stroke="#2cebe8" stroke-width="12"/>
+<path d="M165 119 L348 113 L357 394 L177 405 Z" fill="#09080d" stroke="#f2186e" stroke-width="8"/>
+<path d="M181 132 L326 128 L332 386 L190 392 Z" fill="#17091e"/>
+<path d="M326 128 L355 113 L357 394 L332 386 Z" fill="#2cebe8" opacity=".38"/>
+<circle cx="302" cy="260" r="11" fill="#bfff2b" stroke="#09080d" stroke-width="5"/>
+<path d="M176 405 L111 464 M357 394 L424 452" stroke="#9c2be0" stroke-width="12" stroke-linecap="round"/>
+<path d="M191 392 L145 451 M331 386 L382 447" stroke="#2cebe8" stroke-width="5" opacity=".65"/>
+<path d="M222 118 C193 173 193 249 210 304" fill="none" stroke="#eee2ca" stroke-opacity=".18" stroke-width="7"/>
+<path d="M399 102 C438 128 458 166 464 207" fill="none" stroke="#f2186e" stroke-width="6" stroke-dasharray="14 12"/>
+<g fill="#0b090d" stroke="#eee2ca" stroke-width="4" opacity=".7">
+  <path d="M70 382 l34 -17 l18 28 l-37 21 z"/>
+  <path d="M414 351 l30 -14 l12 26 l-32 16 z"/>
+</g>
 </svg>
