@@ -1,18 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360">
-  <rect width="1280" height="360" fill="none"/>
-  <g fill="#0b0710" stroke="#2cf0eb" stroke-width="5">
-    <path d="M70 330 L150 42 L330 62 L285 330 Z"/>
-    <path d="M330 330 L365 55 L565 35 L555 330 Z"/>
-    <path d="M565 330 L585 25 L790 48 L770 330 Z"/>
-    <path d="M790 330 L815 58 L1035 38 L1110 330 Z"/>
-  </g>
-  <g stroke="#f2186e" stroke-width="4" fill="none">
-    <path d="M150 42 L220 145 L150 238 L285 330"/>
-    <path d="M365 55 L470 160 L390 250 L555 330"/>
-    <path d="M585 25 L690 122 L630 220 L770 330"/>
-    <path d="M815 58 L930 154 L860 254 L1110 330"/>
-  </g>
-  <g fill="#bfff2b">
-    <circle cx="240" cy="150" r="6"/><circle cx="485" cy="145" r="6"/><circle cx="700" cy="135" r="6"/><circle cx="950" cy="145" r="6"/>
-  </g>
+<rect width="1280" height="360" fill="#05070a"/>
+<g fill="#0d0a12" stroke="#2cebe8" stroke-width="7">
+<path d="M35 344 L124 34 L307 60 L272 344 Z"/>
+<path d="M268 344 L323 46 L545 22 L533 344 Z"/>
+<path d="M526 344 L575 17 L792 45 L763 344 Z"/>
+<path d="M757 344 L822 51 L1060 26 L1122 344 Z"/>
+<path d="M1080 344 L1138 94 L1278 68 L1280 344 Z"/>
+</g>
+<g fill="none" stroke="#f2186e" stroke-width="5">
+<path d="M124 34L198 142L124 240L272 344"/>
+<path d="M323 46L445 153L362 251L533 344"/>
+<path d="M575 17L686 126L620 218L763 344"/>
+<path d="M822 51L950 155L865 255L1122 344"/>
+</g>
+<g stroke="#eadfca" stroke-width="3" opacity=".45">
+<path d="M89 310L268 75 M306 314L508 58 M560 311L757 70 M805 321L1031 55 M1102 320L1250 100"/>
+<path d="M78 180L281 221 M302 174L536 205 M548 164L779 206 M794 171L1080 204"/>
+</g>
+<g fill="#bfff2b" stroke="#070609" stroke-width="5">
+<circle cx="204" cy="152" r="10"/><circle cx="449" cy="151" r="10"/><circle cx="690" cy="137" r="10"/><circle cx="955" cy="151" r="10"/>
+</g>
+<g fill="#05070a" stroke="#f2186e" stroke-width="4">
+<path d="M178 292 C170 245 184 210 204 198 C226 215 237 248 230 293 Z"/>
+<path d="M424 292 C417 245 430 210 450 198 C472 215 483 248 476 293 Z"/>
+<path d="M667 292 C660 245 673 210 693 198 C715 215 726 248 719 293 Z"/>
+</g>
+<path d="M1000 281 C1017 263 1032 266 1048 280" fill="none" stroke="#2cebe8" stroke-width="5"/>
+<path d="M1030 248 L1045 266 L1027 280" fill="none" stroke="#f2186e" stroke-width="5"/>
+<path d="M0 347H1280" stroke="#131019" stroke-width="18"/>
 </svg>
