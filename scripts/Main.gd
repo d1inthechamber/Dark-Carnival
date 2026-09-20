@@ -26,6 +26,7 @@ var last_controller_device := 0
 @onready var card_hand: PanelContainer = $Margin/VBox/CardHand
 @onready var card_hint: Label = $Margin/VBox/CardHand/Margin/Row/CardHint
 @onready var transition_fx: Control = $TransitionFX
+@onready var comic_frame: PanelContainer = $Margin/VBox/ComicFrame
 
 func _ready() -> void:
 	show_town_prompt()
@@ -120,9 +121,8 @@ func thief_event() -> void:
 
 func open_card_hand() -> void:
 	current_context = "card_hand"; set_scene("THE CARDS ARE WATCHING"); set_card_shell(true, "Choose carefully. Cards solve problems, but the Carnival remembers how.")
-	story.text = "[center][b]YOUR HAND[/b]\n\nCards resolve immediately. Some solve problems. Some change what kind of problem you have.\n\n[i]D-pad/stick selects • A/Cross plays • B/Circle backs out • LB/RB cycles[/i][/center]"; clear_choices()
-	for card_name in deck: add_choice(card_name + " — " + card_description(card_name), func(): play_card(card_name))
-	add_choice("PUT THE CARDS AWAY", thief_resume)
+	story.text = "[center][b]YOUR HAND[/b]\n\nCards are physical choices now. Pick one and live with what it says about you.\n\n[i]D-pad/stick selects • A/Cross plays • B/Circle backs out • LB/RB cycles[/i][/center]"
+	build_card_grid()
 
 func card_description(card_name: String) -> String:
 	match card_name:
@@ -131,6 +131,74 @@ func card_description(card_name: String) -> String:
 		"CARNIVAL SIGHT": return "reveal the danger behind CALL FOR HELP"
 		"BACK DOOR": return "escape encounter; lose Resolve"
 	return "unknown"
+
+func build_card_grid() -> void:
+	clear_choices()
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	grid.add_theme_constant_override("h_separation", 10)
+	grid.add_theme_constant_override("v_separation", 10)
+	choices.add_child(grid)
+
+	for card_name in deck:
+		var card := Button.new()
+		card.text = card_title(card_name) + "\n" + card_description(card_name).to_upper()
+		card.custom_minimum_size = Vector2(0, 92)
+		card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		card.focus_mode = Control.FOCUS_ALL
+		card.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		apply_card_style(card, card_name)
+		card.pressed.connect(play_card.bind(card_name))
+		grid.add_child(card)
+
+	add_choice("PUT THE CARDS AWAY", thief_resume)
+	call_deferred("focus_first_choice")
+
+func card_title(card_name: String) -> String:
+	match card_name:
+		"HATCHET": return "I  //  HATCHET"
+		"FAYGO BREAK": return "II  //  FAYGO BREAK"
+		"CARNIVAL SIGHT": return "III  //  CARNIVAL SIGHT"
+		"BACK DOOR": return "IV  //  BACK DOOR"
+	return card_name
+
+func card_accent(card_name: String) -> Color:
+	match card_name:
+		"HATCHET": return Color(0.96,0.08,0.22,1)
+		"FAYGO BREAK": return Color(0.1,0.9,0.95,1)
+		"CARNIVAL SIGHT": return Color(0.72,1,0.18,1)
+		"BACK DOOR": return Color(0.72,0.12,0.9,1)
+	return Color(0.95,0.15,0.55,1)
+
+func apply_card_style(button:Button, card_name:String) -> void:
+	var accent := card_accent(card_name)
+	button.add_theme_font_size_override("font_size", 16)
+	button.add_theme_color_override("font_color", Color(0.94,0.92,0.86,1))
+	button.add_theme_color_override("font_focus_color", Color(0.03,0.02,0.04,1))
+	button.add_theme_color_override("font_hover_color", accent)
+	button.add_theme_stylebox_override("normal", make_card_style(Color(0.025,0.018,0.04,1), accent.darkened(0.35), 2))
+	button.add_theme_stylebox_override("hover", make_card_style(Color(0.06,0.025,0.075,1), accent, 3))
+	button.add_theme_stylebox_override("focus", make_card_style(accent, Color(0.98,0.95,0.86,1), 4))
+	button.add_theme_stylebox_override("pressed", make_card_style(accent.darkened(0.2), Color(1,1,1,1), 4))
+
+func make_card_style(bg:Color, border:Color, width:int) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = bg
+	style.border_color = border
+	style.border_width_left = width
+	style.border_width_top = width
+	style.border_width_right = width
+	style.border_width_bottom = width
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_left = 8
+	style.corner_radius_bottom_right = 8
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	style.content_margin_top = 12
+	style.content_margin_bottom = 12
+	return style
 
 func play_card(card_name: String) -> void:
 	record("pickpocket_card",card_name)
@@ -273,6 +341,10 @@ func update_hud(show_stats:=true) -> void:
 
 func set_scene(label_text:String) -> void:
 	scene_label.text = label_text
+	scene_label.modulate.a = 0.45
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(scene_label, "modulate:a", 1.0, 0.16)
 
 func set_card_shell(visible_state:bool, hint:String="") -> void:
 	card_hand.visible = visible_state
@@ -280,6 +352,16 @@ func set_card_shell(visible_state:bool, hint:String="") -> void:
 
 func impact_flash(caption:String, tint:Color) -> void:
 	if transition_fx.has_method("impact"): transition_fx.call("impact", caption, tint)
+	panel_punch()
+
+func panel_punch() -> void:
+	comic_frame.pivot_offset = comic_frame.size * 0.5
+	comic_frame.scale = Vector2(0.982, 1.018)
+	comic_frame.rotation = deg_to_rad(-0.45)
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(comic_frame, "scale", Vector2.ONE, 0.18)
+	tween.parallel().tween_property(comic_frame, "rotation", 0.0, 0.18)
 
 func clear_choices() -> void:
 	for child in choices.get_children(): child.queue_free()
