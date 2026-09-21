@@ -8,6 +8,7 @@ const CARD_ICONS := {
 }
 
 const CARD_CHOICE_SCRIPT = preload("res://scripts/ui/CardChoice.gd")
+const CHOICE_BUTTON_SCRIPT = preload("res://scripts/ui/ChoiceButton.gd")
 
 const SCENE_ART := {
 	"opening": preload("res://assets/art/carnival_of_carnage/coc_opening.svg"),
@@ -414,9 +415,18 @@ func clear_choices() -> void:
 	call_deferred("focus_first_choice")
 
 func add_choice(label:String, callback:Callable) -> void:
-	var b:=Button.new(); b.text=label; b.custom_minimum_size.y=46; b.focus_mode=Control.FOCUS_ALL; b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	var b:=Button.new()
+	b.set_script(CHOICE_BUTTON_SCRIPT)
+	b.text=label
+	b.custom_minimum_size.y=46
+	b.focus_mode=Control.FOCUS_ALL
+	b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	apply_choice_style(b)
-	b.pressed.connect(callback); choices.add_child(b)
+	var index := choices.get_child_count()
+	if b.has_method("configure"):
+		b.call("configure", index, scene_palette(scene_label.text)["accent"])
+	b.pressed.connect(callback)
+	choices.add_child(b)
 
 func apply_choice_style(button:Button) -> void:
 	button.add_theme_font_size_override("font_size", 17)
