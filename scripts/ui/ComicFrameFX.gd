@@ -10,6 +10,7 @@ extends PanelContainer
 
 var ambient_tween: Tween
 var art_origin := Vector2.ZERO
+var scene_mode := "opening"
 
 func _ready() -> void:
 	art_origin = silhouette.position
@@ -20,15 +21,44 @@ func _ready() -> void:
 func _refresh_pivot() -> void:
 	pivot_offset = size * 0.5
 
+func set_scene_mode(mode:String) -> void:
+	scene_mode = mode
+	_start_ambient_motion()
+
 func _start_ambient_motion() -> void:
 	if ambient_tween and ambient_tween.is_running():
 		ambient_tween.kill()
+	silhouette.position = art_origin
+	silhouette.rotation = 0.0
+	silhouette.scale = Vector2.ONE
+	var drift := art_drift_pixels
+	var seconds := sway_seconds
+	match scene_mode:
+		"mirrors":
+			drift = art_drift_pixels * 1.7
+			seconds = sway_seconds * 0.55
+		"midway":
+			drift = art_drift_pixels * 1.25
+			seconds = sway_seconds * 0.72
+		"finale":
+			drift = art_drift_pixels * 0.55
+			seconds = sway_seconds * 1.3
 	ambient_tween = create_tween().set_loops()
 	ambient_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	ambient_tween.tween_property(silhouette, "position:x", art_origin.x + art_drift_pixels, sway_seconds)
-	ambient_tween.parallel().tween_property(eyebrow, "modulate:a", 0.62, sway_seconds)
-	ambient_tween.tween_property(silhouette, "position:x", art_origin.x - art_drift_pixels, sway_seconds)
-	ambient_tween.parallel().tween_property(eyebrow, "modulate:a", 1.0, sway_seconds)
+	ambient_tween.tween_property(silhouette, "position:x", art_origin.x + drift, seconds)
+	ambient_tween.parallel().tween_property(eyebrow, "modulate:a", 0.58, seconds)
+	if scene_mode == "mirrors":
+		ambient_tween.parallel().tween_property(silhouette, "scale:x", 1.018, seconds)
+		ambient_tween.parallel().tween_property(silhouette, "rotation", deg_to_rad(0.18), seconds)
+	elif scene_mode == "midway":
+		ambient_tween.parallel().tween_property(silhouette, "position:y", art_origin.y - 2.0, seconds)
+	ambient_tween.tween_property(silhouette, "position:x", art_origin.x - drift, seconds)
+	ambient_tween.parallel().tween_property(eyebrow, "modulate:a", 1.0, seconds)
+	if scene_mode == "mirrors":
+		ambient_tween.parallel().tween_property(silhouette, "scale:x", 0.985, seconds)
+		ambient_tween.parallel().tween_property(silhouette, "rotation", deg_to_rad(-0.18), seconds)
+	elif scene_mode == "midway":
+		ambient_tween.parallel().tween_property(silhouette, "position:y", art_origin.y + 2.0, seconds)
 
 func scene_hit(strength := 1.0) -> void:
 	var amount: float = clampf(strength, 0.25, 1.5)
