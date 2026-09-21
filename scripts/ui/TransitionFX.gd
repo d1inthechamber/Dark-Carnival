@@ -14,7 +14,6 @@ func impact(text: String = "", tint: Color = Color(0.95, 0.08, 0.22, 1.0)) -> vo
 	slash_a.color = tint
 	caption.text = text
 	caption.rotation = deg_to_rad(-2.0)
-
 	active_tween = create_tween()
 	active_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	active_tween.tween_property(flash, "modulate:a", 0.68, 0.035)
@@ -24,6 +23,32 @@ func impact(text: String = "", tint: Color = Color(0.95, 0.08, 0.22, 1.0)) -> vo
 	active_tween.tween_property(flash, "modulate:a", 0.0, 0.22)
 	active_tween.parallel().tween_property(caption, "modulate:a", 0.0, 0.22)
 	active_tween.parallel().tween_property(caption, "scale", Vector2.ONE, 0.22)
+
+func page_turn(text:String = "") -> void:
+	_stop_active()
+	_reset_layers()
+	flash.color = Color(0.025, 0.018, 0.03, 1.0)
+	slash_a.color = Color(0.91, 0.84, 0.70, 1.0)
+	slash_b.color = Color(0.95, 0.10, 0.34, 1.0)
+	caption.text = text
+	caption.rotation = deg_to_rad(-1.5)
+	slash_a.rotation = -0.10
+	slash_b.rotation = 0.08
+	slash_a.scale = Vector2(0.02, 1.0)
+	slash_b.scale = Vector2(0.02, 1.0)
+	active_tween = create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	active_tween.tween_property(flash, "modulate:a", 0.88, 0.055)
+	active_tween.parallel().tween_property(slash_a, "modulate:a", 0.62, 0.04)
+	active_tween.parallel().tween_property(slash_a, "scale:x", 1.35, 0.14)
+	active_tween.parallel().tween_property(slash_b, "modulate:a", 0.45, 0.05)
+	active_tween.parallel().tween_property(slash_b, "scale:x", 1.18, 0.18)
+	active_tween.tween_interval(0.045)
+	active_tween.tween_property(flash, "modulate:a", 0.0, 0.24)
+	active_tween.parallel().tween_property(slash_a, "modulate:a", 0.0, 0.22)
+	active_tween.parallel().tween_property(slash_b, "modulate:a", 0.0, 0.22)
+	if not text.is_empty():
+		caption.modulate.a = 1.0
+		active_tween.parallel().tween_property(caption, "modulate:a", 0.0, 0.28)
 
 func card_play(card_name:String, text:String, tint:Color) -> void:
 	_stop_active()
@@ -36,10 +61,8 @@ func card_play(card_name:String, text:String, tint:Color) -> void:
 	caption.scale = Vector2(0.82, 0.82)
 	slash_a.scale.x = 0.02
 	slash_b.scale.x = 0.02
-
 	active_tween = create_tween()
 	active_tween.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-
 	match card_name:
 		"HATCHET":
 			slash_a.rotation = -0.34
@@ -49,12 +72,14 @@ func card_play(card_name:String, text:String, tint:Color) -> void:
 			active_tween.parallel().tween_property(slash_b, "modulate:a", 0.7, 0.025)
 			active_tween.parallel().tween_property(slash_b, "scale:x", 1.0, 0.11)
 		"FAYGO BREAK":
-			slash_a.rotation = 1.16
-			slash_b.rotation = 1.32
-			active_tween.tween_property(slash_a, "modulate:a", 0.72, 0.03)
-			active_tween.parallel().tween_property(slash_a, "scale:x", 0.78, 0.12)
-			active_tween.parallel().tween_property(slash_b, "modulate:a", 0.82, 0.03)
-			active_tween.parallel().tween_property(slash_b, "scale:x", 0.62, 0.12)
+			slash_a.rotation = 1.08
+			slash_b.rotation = 1.34
+			slash_a.scale.y = 0.32
+			slash_b.scale.y = 0.22
+			active_tween.tween_property(slash_a, "modulate:a", 0.82, 0.025)
+			active_tween.parallel().tween_property(slash_a, "scale", Vector2(0.92, 0.46), 0.13)
+			active_tween.parallel().tween_property(slash_b, "modulate:a", 0.88, 0.035)
+			active_tween.parallel().tween_property(slash_b, "scale", Vector2(0.72, 0.35), 0.15)
 		"CARNIVAL SIGHT":
 			flash.color = Color(tint.r, tint.g, tint.b, 1)
 			active_tween.tween_property(flash, "modulate:a", 0.5, 0.055)
@@ -67,7 +92,6 @@ func card_play(card_name:String, text:String, tint:Color) -> void:
 			active_tween.parallel().tween_property(slash_a, "scale:x", 0.42, 0.13)
 			active_tween.parallel().tween_property(slash_b, "modulate:a", 0.55, 0.025)
 			active_tween.parallel().tween_property(slash_b, "scale:x", 0.24, 0.14)
-
 	active_tween.tween_property(caption, "modulate:a", 1.0, 0.035)
 	active_tween.parallel().tween_property(caption, "scale", Vector2(1.08, 1.08), 0.055)
 	active_tween.parallel().tween_property(flash, "modulate:a", 0.42, 0.035)
