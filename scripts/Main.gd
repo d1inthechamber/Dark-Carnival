@@ -170,7 +170,6 @@ func build_card_grid() -> void:
 	grid.add_theme_constant_override("h_separation", 8)
 	grid.add_theme_constant_override("v_separation", 4)
 	choices.add_child(grid)
-
 	for index in range(deck.size()):
 		var card_name := deck[index]
 		var card := Button.new()
@@ -181,17 +180,8 @@ func build_card_grid() -> void:
 		card.call("configure", card_name, card_description(card_name), card_accent(card_name), CARD_ICONS.get(card_name), index)
 		card.pressed.connect(play_card.bind(card_name))
 		grid.add_child(card)
-
 	add_choice("LOWER THE HAND", thief_resume)
 	call_deferred("focus_first_choice")
-
-func card_title(card_name: String) -> String:
-	match card_name:
-		"HATCHET": return "I  //  HATCHET"
-		"FAYGO BREAK": return "II  //  FAYGO BREAK"
-		"CARNIVAL SIGHT": return "III  //  CARNIVAL SIGHT"
-		"BACK DOOR": return "IV  //  BACK DOOR"
-	return card_name
 
 func card_accent(card_name: String) -> Color:
 	match card_name:
@@ -200,36 +190,6 @@ func card_accent(card_name: String) -> Color:
 		"CARNIVAL SIGHT": return Color(0.72,1,0.18,1)
 		"BACK DOOR": return Color(0.72,0.12,0.9,1)
 	return Color(0.95,0.15,0.55,1)
-
-func apply_card_style(button:Button, card_name:String) -> void:
-	var accent := card_accent(card_name)
-	button.icon = CARD_ICONS.get(card_name)
-	button.add_theme_font_size_override("font_size", 16)
-	button.add_theme_color_override("font_color", Color(0.94,0.92,0.86,1))
-	button.add_theme_color_override("font_focus_color", Color(0.03,0.02,0.04,1))
-	button.add_theme_color_override("font_hover_color", accent)
-	button.add_theme_stylebox_override("normal", make_card_style(Color(0.025,0.018,0.04,1), accent.darkened(0.35), 2))
-	button.add_theme_stylebox_override("hover", make_card_style(Color(0.06,0.025,0.075,1), accent, 3))
-	button.add_theme_stylebox_override("focus", make_card_style(accent, Color(0.98,0.95,0.86,1), 4))
-	button.add_theme_stylebox_override("pressed", make_card_style(accent.darkened(0.2), Color(1,1,1,1), 4))
-
-func make_card_style(bg:Color, border:Color, width:int) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = bg
-	style.border_color = border
-	style.border_width_left = width
-	style.border_width_top = width
-	style.border_width_right = width
-	style.border_width_bottom = width
-	style.corner_radius_top_left = 8
-	style.corner_radius_top_right = 8
-	style.corner_radius_bottom_left = 8
-	style.corner_radius_bottom_right = 8
-	style.content_margin_left = 16
-	style.content_margin_right = 16
-	style.content_margin_top = 12
-	style.content_margin_bottom = 12
-	return style
 
 func play_card(card_name: String) -> void:
 	record("pickpocket_card",card_name)
@@ -312,7 +272,7 @@ func mirror_tent() -> void:
 func mirror_faygo() -> void:
 	if faygo<=0: story.text="You have no Faygo to offer."; clear_choices(); add_choice("BREAK THE MIRROR",mirror_break); add_choice("TRUST YOURSELF",mirror_trust); return
 	faygo-=1; resolve=min(100,resolve+10); record("mirror_maze","paid_reflection"); set_scene("THE REFLECTION DRINKS")
-	story.text="The bottle vanishes through the glass. Your reflection drinks, smiles, and points to a seam in the darkness.\n\n[b]Faygo -1. Resolve +10.[/b]"; update_hud(); clear_choices(); add_choice("FOLLOW THE EXIT",finale_gate)
+	story.text="The bottle vanishes through the glass. Your reflection drinks, smiles, and points to a seam in the darkness.\n\n[b]Faygo -1. Resolve +10.[/b]"; update_hud(); card_impact("FAYGO BREAK", "FSSSHHH!", Color(0.1,0.9,0.95,1)); clear_choices(); add_choice("FOLLOW THE EXIT",finale_gate)
 
 func mirror_break() -> void:
 	health=max(0,health-12); morality["violence"]+=1; record("mirror_maze","broke_mirror"); set_scene("SHATTER")
@@ -373,30 +333,39 @@ func update_hud(show_stats:=true) -> void:
 func set_scene(label_text:String) -> void:
 	scene_label.text = label_text
 	var palette := scene_palette(label_text)
+	var mode := scene_mode_for(label_text)
 	scene_label.add_theme_color_override("font_color", palette["accent"])
 	art_silhouette.texture = scene_art_for(label_text)
+	if comic_frame.has_method("set_scene_mode"):
+		comic_frame.call("set_scene_mode", mode)
 	var material := art_backdrop.material as ShaderMaterial
 	if material:
 		material.set_shader_parameter("neon_a", palette["accent"])
 		material.set_shader_parameter("neon_b", palette["secondary"])
-	scene_label.modulate.a = 0.45
-	art_silhouette.modulate.a = 0.2
+	scene_label.modulate.a = 0.35
+	art_silhouette.modulate.a = 0.12
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(scene_label, "modulate:a", 1.0, 0.16)
-	tween.parallel().tween_property(art_silhouette, "modulate:a", 0.76, 0.22)
+	tween.parallel().tween_property(art_silhouette, "modulate:a", 0.82, 0.24)
+	if transition_fx.has_method("page_turn") and current_context != "title":
+		transition_fx.call("page_turn", "")
+
+func scene_mode_for(label_text:String) -> String:
+	var upper := label_text.to_upper()
+	if upper.contains("MIRROR") or upper.contains("REFLECTION") or upper.contains("SHATTER") or upper.contains("WATCHING THE REFLECTIONS"):
+		return "mirrors"
+	if upper.contains("ONE SOUL") or upper.contains("LIGHT DIES") or upper.contains("DAWN") or upper.contains("PULL") or upper.contains("EVERYBODY IS LOOKING"):
+		return "finale"
+	if upper.contains("GATE") or upper.contains("IRON") or upper.contains("ADMISSION"):
+		return "gate"
+	if upper.contains("BOTTLE") or upper.contains("RABBIT") or upper.contains("MIDWAY") or upper.contains("THIEF") or upper.contains("CHASE") or upper.contains("CARNIVAL ANSWERS") or upper.contains("TAKE THE MONEY") or upper.contains("YOU WATCH") or upper.contains("STEP BETWEEN") or upper.contains("FAYGO"):
+		return "midway"
+	return "opening"
 
 func scene_art_for(label_text:String) -> Texture2D:
-	var upper := label_text.to_upper()
-	if upper.contains("MIRROR") or upper.contains("REFLECTION") or upper.contains("SHATTER"):
-		return SCENE_ART["mirrors"]
-	if upper.contains("BOTTLE") or upper.contains("RABBIT") or upper.contains("THIRD THROW") or upper.contains("MIDWAY") or upper.contains("THIEF") or upper.contains("CHASE") or upper.contains("CARNIVAL ANSWERS") or upper.contains("TAKE THE MONEY") or upper.contains("YOU WATCH") or upper.contains("STEP BETWEEN"):
-		return SCENE_ART["midway"]
-	if upper.contains("ONE SOUL") or upper.contains("LIGHT DIES") or upper.contains("DAWN") or upper.contains("PULL") or upper.contains("EVERYBODY IS LOOKING"):
-		return SCENE_ART["finale"]
-	if upper.contains("GATE") or upper.contains("IRON") or upper.contains("ADMISSION"):
-		return SCENE_ART["gate"]
-	return SCENE_ART["opening"]
+	var mode := scene_mode_for(label_text)
+	return SCENE_ART.get(mode, SCENE_ART["opening"])
 
 func scene_palette(label_text:String) -> Dictionary:
 	var upper := label_text.to_upper()
@@ -420,6 +389,7 @@ func set_card_shell(visible_state:bool, hint:String="") -> void:
 
 func impact_flash(caption:String, tint:Color) -> void:
 	if transition_fx.has_method("impact"): transition_fx.call("impact", caption, tint)
+	if comic_frame.has_method("scene_hit"): comic_frame.call("scene_hit", 1.0)
 	panel_punch()
 
 func card_impact(card_name:String, caption:String, tint:Color) -> void:
@@ -427,6 +397,7 @@ func card_impact(card_name:String, caption:String, tint:Color) -> void:
 		transition_fx.call("card_play", card_name, caption, tint)
 	else:
 		impact_flash(caption, tint)
+	if comic_frame.has_method("scene_hit"): comic_frame.call("scene_hit", 1.2)
 	panel_punch()
 
 func panel_punch() -> void:
