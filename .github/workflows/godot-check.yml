@@ -25,6 +25,8 @@ jobs:
         run: godot --headless --editor --quit --path .
       - name: Validate project and scripts
         run: godot --headless --path . --quit-after 2
+      - name: Run Carnival of Carnage regression smoke test
+        run: godot --headless --path . --script res://scripts/tests/SmokeTest.gd
       - name: Validate Windows demo export
         run: |
           mkdir -p build
