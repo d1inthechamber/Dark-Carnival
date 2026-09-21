@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id="1"]
 [ext_resource path="res://scenes/ui/HUDBar.tscn" type="PackedScene" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/ui/CardHand.tscn" type="PackedScene" id="5"]
 [ext_resource path="res://scenes/ui/TransitionFX.tscn" type="PackedScene" id="6"]
 [ext_resource path="res://assets/brand/hatchet_man_authoritative.png" type="Texture2D" id="7_brand"]
+[ext_resource path="res://scripts/ui/TitleFX.gd" type="Script" id="8_titlefx"]
 
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_brand"]
@@ -94,6 +95,7 @@ theme_override_constants/separation = 9
 [node name="Header" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 12
+script = ExtResource("8_titlefx")
 
 [node name="BrandBadge" type="PanelContainer" parent="Margin/VBox/Header"]
 custom_minimum_size = Vector2(44, 44)
@@ -115,8 +117,9 @@ theme_override_colors/font_color = Color(0.98, 0.12, 0.42, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 34
 text = "THE DARK CARNIVAL"
+uppercase = true
 
 [node name="BuildTag" type="Label" parent="Margin/VBox/Header"]
 layout_mode = 2
@@ -124,6 +127,9 @@ theme_override_colors/font_color = Color(0.72, 1, 0.18, 1)
 theme_override_font_sizes/font_size = 13
 text = "JOKER CARD I // CARNIVAL OF CARNAGE"
 vertical_alignment = 1
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
 
 [node name="HUDBar" parent="Margin/VBox" instance=ExtResource("2")]
 layout_mode = 2
